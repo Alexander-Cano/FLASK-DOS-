@@ -1,9 +1,25 @@
-# Importamos Flask y una funcion que permite mostrar un HTML.
-from flask import Flask, render_template
-
-
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+
+
+
+class Estudiante(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    programa = db.Column(db.String(50), nullable=False)
+    fecha_inscripcion = db.Column(db.DateTime, default=db.func.now())
+
+    def __repr__(self):
+        return f'<Estudiante {self.nombre}>'
 
 
 
@@ -53,6 +69,11 @@ def recursos():
     enlaces = [
         {"nombre": "Documentacion Flask", "url": "https://flask.palletsprojects.com"},
         {"nombre": "Tutorial Python", "url": "https://docs.python.org"},
+    {"nombre": "GitHub del Profesor", "url": "https://github.com/hortegon"},
+    {"nombre": "MDN - HTML y CSS", "url": "https://developer.mozilla.org"},
+
+        {"nombre": "Documentacion Flask", "url": "https://flask.palletsprojects.com"},
+        {"nombre": "Tutorial Python", "url": "https://docs.python.org"},
         {"nombre": "GitHub del Profesor", "url": "https://github.com/hortegon"}
     ]
     return render_template("recursos.html", enlaces=enlaces)
@@ -67,6 +88,41 @@ def tareas():
         {"numero": 3, "titulo": "Multiple paginas", "fecha": "05/06/2026"}
     ]
     return render_template("tareas.html", tareas=lista_tareas)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/inscripcion", methods=["GET", "POST"])
+def inscripcion():
+    mensaje = None
+    
+    if request.method == "POST":
+        # El usuario envio el formulario
+        nombre = request.form.get("nombre")
+        email = request.form.get("email")
+        programa = request.form.get("programa")
+        
+        # Validacion basica
+        if nombre and email and programa:
+            mensaje = f"Bienvenido {nombre}! Te hemos registrado."
+        else:
+            mensaje = "Por favor completa todos los campos."
+    
+    return render_template("inscripcion.html", mensaje=mensaje)
 
 
 
