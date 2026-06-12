@@ -1,0 +1,14 @@
+# Entorno virtual
+.venv/
+
+# Cache de Python
+__pycache__/
+*.pyc
+
+# Archivos de entorno y herramientas
+.env
+.DS_Store
+
+# Carpetas comunes de editores
+.vscode/
+.idea/

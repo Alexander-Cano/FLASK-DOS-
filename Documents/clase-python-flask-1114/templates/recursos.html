@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Portal Clase 1114</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #667eea; }
+        .navbar-brand { font-weight: bold; font-size: 1.5rem; }
+        .footer { background-color: #343a40; color: white; padding: 20px 0; margin-top: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Clase 1114</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/informacion">Informacion</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recursos">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/tareas">Tareas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/inscripcion">Inscripcion</a></li>
+                    {% if session.get('usuario_id') %}
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5" style="min-height: 60vh;">
+        <h1 class="mb-4">Recursos Educativos</h1>
+        <p class="lead">Enlaces utiles para aprender mas:</p>
+
+        <ul class="list-group w-50">
+            {% for enlace in enlaces %}
+            <li class="list-group-item">
+                <a href="{{ enlace.url }}" target="_blank" class="text-decoration-none">{{ enlace.nombre }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Portal Clase 1114 | Profesor: Henry Ortegon | Kyrbot Innovations</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
